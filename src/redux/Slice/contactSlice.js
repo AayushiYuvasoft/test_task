@@ -50,7 +50,7 @@ export const deleteContact = createAsyncThunk(
 );
 
 export const getByIdContact = createAsyncThunk(
-  "auth/signupUser",
+  "/id",
   async (id) => {
     try {
       const response = await api.get(`https://api.example.com/signup/${id}`);
