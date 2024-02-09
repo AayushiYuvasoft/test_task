@@ -1,16 +1,11 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
 import HomeIcon from "@mui/icons-material/Home";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import ChromeReaderModeIcon from "@mui/icons-material/ChromeReaderMode";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -39,8 +34,8 @@ const Sidebar = () => {
 
         <ListItemButton
           name="resultForm"
-          selected={isActive("/list")}
-          onClick={() => navigate("/list")}
+          selected={isActive("/contactlist")}
+          onClick={() => navigate("/contactlist")}
         >
           <ListItemIcon>
             <DashboardCustomizeIcon />
@@ -49,9 +44,8 @@ const Sidebar = () => {
         </ListItemButton>
         <ListItemButton
           name="resultForm"
-          
-          selected={isActive("/customer/form")}
-          onClick={() => navigate("/customer/form")}
+          selected={isActive("/customerlist")}
+          onClick={() => navigate("/customerlist")}
         >
           <ListItemIcon>
             <DashboardCustomizeIcon />
