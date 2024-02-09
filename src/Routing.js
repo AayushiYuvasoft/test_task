@@ -7,8 +7,8 @@ import Signup from "./auth/Signup";
 import Layout from "./components/Layout";
 import ProtectedRoutes from "./PrivateRoutes";
 import Homes from "./components/Home/Home";
-import PageNotFound from "./components/NotFound/PageNotFound";
 import Signing from "./auth/Signin";
+import CustomerListing from "./customer/CustomerListing";
 
 const Routing = () => {
   return (
@@ -22,24 +22,29 @@ const Routing = () => {
             path="/home"
             element={<ProtectedRoutes Components={Homes} />}
           />
-
+          <Route path="/contact/form" element={<ContactForm />} />
           <Route
             path="/contact/form"
             element={<ProtectedRoutes Components={ContactForm} />}
           />
+
           <Route
-            path="/customer/form"
+            path="/customer/form/:id"
             element={<ProtectedRoutes Components={CustomerForm} />}
           />
           <Route
             path="/contact/form/:id"
             element={<ProtectedRoutes Components={ContactForm} />}
           />
+
           <Route
-            path="/list"
+            path="/customerlist"
+            element={<ProtectedRoutes Components={<CustomerListing />} />}
+          />
+          <Route
+            path="/contactlist"
             element={<ProtectedRoutes Components={ContactListing} />}
           />
-          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Layout>
     </BrowserRouter>

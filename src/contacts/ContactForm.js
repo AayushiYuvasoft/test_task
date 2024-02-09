@@ -1,20 +1,17 @@
 import {
   Button,
-  Card,
   Container,
   Grid,
   Paper,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useFormik } from "formik/dist";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { addContact, editContact } from "../redux/Slice/contactSlice";
+import { addContact, editContact, getByIdContact } from "../redux/Slice/contactSlice";
 import { useDispatch } from "react-redux";
 
 const ContactForm = () => {
@@ -43,10 +40,10 @@ const ContactForm = () => {
         if (id) {
           const response = dispatch(addContact(values));
 
-          navigate("/list");
+          navigate("/contactlist");
         } else {
           const response = dispatch(editContact(values));
-          navigate("/list");
+          navigate("/contactlist");
         }
       } catch (error) {
         console.error("Login failed:", error);
@@ -60,9 +57,7 @@ const ContactForm = () => {
   useEffect(() => {
     const fetchContactDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/user/${id}`
-        );
+        const response = dispatch(getByIdContact(id))
         const contact = response.data;
         formik.setValues({
           phone: contact.phone || "",

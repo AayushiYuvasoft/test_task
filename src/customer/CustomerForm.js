@@ -4,27 +4,25 @@ import {
   Container,
   Grid,
   Paper,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik/dist";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addCustomer } from "../redux/Slice/customerSlice";
+import axios from "axios";
+import { editCustomer, getByIdCustomer } from "../redux/Slice/customerSlice";
 
 const CustomerForm = () => {
+  const { id } = useParams();
+
   const navigate = useNavigate();
 const dispatch=useDispatch()
   const formik = useFormik({
     initialValues: {
       name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Phone is required"),
@@ -38,8 +36,8 @@ const dispatch=useDispatch()
 
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        const response = dispatch(addCustomer(values))
-        navigate("/list");
+        const response = dispatch(editCustomer(values ,id))
+        navigate("/customerlist");
       } catch (error) {
         console.error("Login failed:", error);
         setStatus("An error occurred while logging in");
@@ -48,6 +46,27 @@ const dispatch=useDispatch()
       }
     },
   });
+
+  
+  useEffect(() => {
+    const fetchContactDetails = async () => {
+      try {
+        const response =dispatch(getByIdCustomer(id))
+        const customer = response.data;
+        formik.setValues({
+          name: customer.name || "",
+  
+        });
+      } catch (error) {
+        console.error("Failed to fetch contact details:", error);
+      }
+    };
+
+    if (id) {
+      fetchContactDetails();
+    }
+  }, [id, formik]);
+
 
   return (
     <Container>
@@ -64,7 +83,7 @@ const dispatch=useDispatch()
             guttrBottom
             onClick={() => navigate("/contact/form")}
           >
-            Contact
+            customer
           </Button>
         </Grid>
       </Grid>
@@ -85,7 +104,7 @@ const dispatch=useDispatch()
               />
             </Grid>
 
-            <Grid item xs={4} md={4}>
+            {/* <Grid item xs={4} md={4}>
               <TextField
                 fullWidth
                 type="email"
@@ -97,9 +116,9 @@ const dispatch=useDispatch()
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               />
-            </Grid>
+            </Grid> */}
 
-            <Grid item xs={4} md={4}>
+            {/* <Grid item xs={4} md={4}>
               <TextField
                 fullWidth
                 type="password"
@@ -112,8 +131,8 @@ const dispatch=useDispatch()
                 }
                 helperText={formik.touched.password && formik.errors.password}
               />
-            </Grid>
-            <Grid item xs={4} md={4}>
+            </Grid> */}
+            {/* <Grid item xs={4} md={4}>
               <TextField
                 fullWidth
                 type="password"
@@ -130,7 +149,7 @@ const dispatch=useDispatch()
                   formik.errors.currentPassword
                 }
               />
-            </Grid>
+            </Grid> */}
             <Grid
               item
               xs={12}

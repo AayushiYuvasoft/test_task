@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { api } from "../../api";
 
 export const fetchData = createAsyncThunk("auth/fetchData", async () => {
@@ -11,12 +10,12 @@ export const fetchData = createAsyncThunk("auth/fetchData", async () => {
   }
 });
 
-export const addCustomer = createAsyncThunk(
-  "auth/loginUser",
-  async (userData) => {
+export const editCustomer = createAsyncThunk(
+  "auth/edituser",
+  async (userData ,id) => {
     try {
       const response = await api.post(
-        "https://api.example.com/login",
+        `https://api.example.com/api/customer/edit/${id}`,
         userData
       );
       return response.data;
@@ -26,6 +25,19 @@ export const addCustomer = createAsyncThunk(
   }
 );
 
+export const getByIdCustomer = createAsyncThunk(
+  "auth/edituser",
+  async (id) => {
+    try {
+      const response = await api.post(
+        `https://api.example.com/api/customer/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 const initialState = {
   data: [],
@@ -42,8 +54,11 @@ const authSlice = createSlice({
       .addCase(fetchData.fulfilled, (state, action) => {
         state.data = action.payload;
       })
+      .addCase(getByIdCustomer.fulfilled, (state, action) => {
+        state.data = action.payload;
+      })
 
-      .addCase(addCustomer.fulfilled, (state, action) => {
+      .addCase(editCustomer.fulfilled, (state, action) => {
         state.data = action.payload;
       });
   },

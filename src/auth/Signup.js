@@ -4,7 +4,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./signing.scss";
 import * as Yup from "yup";
-import axios from "axios";
 import { signupUser } from "../redux/Slice/authSlice";
 import { useDispatch } from "react-redux";
 
