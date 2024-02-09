@@ -26,7 +26,7 @@ export const editCustomer = createAsyncThunk(
 );
 
 export const getByIdCustomer = createAsyncThunk(
-  "auth/edituser",
+  "auth/getbyid",
   async (id) => {
     try {
       const response = await api.post(
